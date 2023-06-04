@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .menu{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            width: 400px;
+            height: 640px;
+            background-color: gold;
+        }
+
+        .menu > h2{
+            position: relative;
+            left: 30%;
+        }
+
+        .sizes > button{
+            border: none;
+            padding: 20px;
+            display: inline-block;
+            margin-left: 50px;
+        }
+
+        .sizes > button:hover{
+            box-shadow: inset -3px 11px 63px -28px rgba(0,0,0,0.71);
+        }
+
+        #none{
+            grid-area: no;
+        }
+
+        #thirty{
+            grid-area: thirty;
+        }
+
+        #sixty{
+            grid-area: sixty;
+        }
+
+        #ninety{
+            grid-area: ninety;
+        }
+
+        .timer{
+            display: grid;
+            grid-template-areas: "no thirty sixty"
+                            ". ninety .";
+        }
+
+        .timer > button{
+            border: none;
+            padding: 15px;
+            width: 80%;
+            margin-left: 1em;
+            margin-top: 1em;
+        }
+
+        .timer > button:hover{
+            box-shadow: inset -3px 11px 63px -28px rgba(0,0,0,0.71);
+        }
+
+        #enter{
+            width: 90px;
+            height: 45px;
+            font-size: 15px;
+            position: relative;
+            left: 38%;
+            top: 40%;
+            border: 3px solid black;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <h2>Choose tile size</h2>
+        <div class="sizes">
+            <button id="four" onclick="choose_size(this.id)">4x4</button>
+            <button id="six" onclick="choose_size(this.id)">6x6</button>
+            <button id="eight" onclick="choose_size(this.id)">8x8</button>
+        </div>
+        <br>
+        <h2>Choose time limit</h2>
+        <div class="timer">
+            <button id="none" onclick="choose_tl(this.id)">No limit</button>
+            <button id="thirty" onclick="choose_tl(this.id)">30 secs</button>
+            <button id="sixty" onclick="choose_tl(this.id)">60 secs</button>
+            <button id="ninety" onclick="choose_tl(this.id)">90 secs</button>
+        </div>
+        <button id="enter" onclick="startGame()">Start game!</button>
+    </div>
+    <h1 id="error"></h1>
+    <script>
+        let tile_size;
+        let tlimit;
+        function choose_size(thisinnerHTML){
+            document.getElementById("four").style.border = "none";document.getElementById("six").style.border = "none";document.getElementById("eight").style.border = "none";
+            document.getElementById(thisinnerHTML).style.border = "3px solid black";
+            tile_size = thisinnerHTML;
+        }
+
+        function choose_tl(thisinnerHTML){
+            document.getElementById("none").style.border = "none";document.getElementById("thirty").style.border = "none";document.getElementById("sixty").style.border = "none";document.getElementById("ninety").style.border = "none";
+            document.getElementById(thisinnerHTML).style.border = "3px solid black";
+            tlimit = thisinnerHTML;
+        }
+        
+        function startGame(){
+            if((tile_size == "" || tile_size == undefined) && (tlimit == "" || tlimit == undefined)){
+                document.getElementById("error").innerHTML = "You must choose tile size!";
+                setTimeout(()=>{document.getElementById("error").innerHTML = "";}, 1000);
+            }
+            else{
+                window.location.href = "game.html?tile_size=" + tile_size + "&tlimit=" + tlimit;
+            }
+        }
+    </script>
+</body>
+</html>
